@@ -16,15 +16,15 @@ Geometry::~Geometry(void)
 Geometry* Geometry::fromStream(std::istream &in){
 	switch(getNextType(in)){
 	case SPHERE:
-		std::cout << "SPHERE\n";
+		//std::cout << "SPHERE\n";
 		return new Sphere(in);
 		break;
 	case OTHER:
-		std::cout << "OTHER\n";
+		//std::cout << "OTHER\n";
 		return new Geometry();
 		break;
 	default:
-		std::cout << "ERR\n";
+		//std::cout << "ERR\n";
 		return new Geometry();
 		break;
 	}
@@ -34,7 +34,7 @@ Geometry::geomTypes Geometry::getNextType(std::istream& in){
 	long loc = in.tellg();
 	char buffer[30];
 	in.get(buffer, 29, ',');
-	std::cout << "--------" << buffer << "--------\n";
+	//std::cout << "--------" << buffer << "--------\n";
 	if(strcmp(buffer, "{type:sphere") == 0) {
 		in.seekg(loc, std::ios_base::beg);
 		return SPHERE;

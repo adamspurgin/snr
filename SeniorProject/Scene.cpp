@@ -7,6 +7,8 @@ using namespace Gdiplus;
 
 #pragma comment(lib, "gdiplus.lib")
 
+#define PROGRESS_TICKS 75
+
 Scene::Scene(void)
 {
 }
@@ -91,35 +93,18 @@ void Scene::addElement(Camera* l){
 	cameras.push_back(l);
 }
 
-int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
-{
-   UINT  num = 0;          // number of image encoders
-   UINT  size = 0;         // size of the image encoder array in bytes
-
-   ImageCodecInfo* pImageCodecInfo = NULL;
-
-   GetImageEncodersSize(&num, &size);
-   if(size == 0)
-      return -1;  // Failure
-
-   pImageCodecInfo = (ImageCodecInfo*)(malloc(size));
-   if(pImageCodecInfo == NULL)
-      return -1;  // Failure
-
-   GetImageEncoders(num, size, pImageCodecInfo);
-
-   for(UINT j = 0; j < num; ++j)
-   {
-      if( wcscmp(pImageCodecInfo[j].MimeType, format) == 0 )
-      {
-         *pClsid = pImageCodecInfo[j].Clsid;
-         free(pImageCodecInfo);
-         return j;  // Success
-      }    
-   }
-
-   free(pImageCodecInfo);
-   return -1;  // Failure
+HitRecord Scene::getHitRecord(Ray r){
+	long distance = LONG_MAX;
+	HitRecord hr;
+	for(int g=0; g<geom.size(); g++){
+		long intersect = geom[g]->intersect(r);
+		if(intersect > 0 && intersect < distance){
+			hr.hitObject = geom[g];
+			hr.distance = intersect;
+			hr.hit = true;
+		}
+	}
+	return hr;
 }
 
 Bitmap* Scene::trace(int cam){
@@ -127,28 +112,34 @@ Bitmap* Scene::trace(int cam){
 	GdiplusStartupInput gdiplusStartupInput;
 	ULONG_PTR gdiplusToken;
 	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
-	CLSID   encoderClsid;
-	GetEncoderClsid(L"image/bmp", &encoderClsid);
 	Bitmap* b = new Bitmap(width, height);
 
+	std::cout << "|";
+	for(int i=0; i<PROGRESS_TICKS - 2; i++){
+		std::cout << "-";
+	}
+	std::cout << "|\n";
+	
+	int last = 0;
 	//trace loop
 	for(int i=0; i<height; i++){
 		for(int j=0; j<width; j++){
+			int current = ((double)(i*width + j) / ((double)width*(double)height)) * PROGRESS_TICKS;
 			Ray r = getRay(i, j, cam);
-			bool hit = false;
-			for(int g=0; g<geom.size(); g++){
-				hit |= (geom[g]->intersect(r) > 0);
-			}
-			if(hit){
+			HitRecord hr = this->getHitRecord(r);
+			if(hr.hit){
 				b->SetPixel(j, i, Gdiplus::Color(255, 255, 255));
 			} else {
 				b->SetPixel(j, i, Gdiplus::Color(0, 0, 0));
 			}
+			if(current > last){
+				std::cout << "=";
+				last = current;
+			}
 		}
 	}
+	std::cout << "=\n";
 
-	b->Save(L"test.bmp", &encoderClsid, NULL);
-	
 	return b;
 }
 

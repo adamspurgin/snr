@@ -4,6 +4,7 @@
 #include "Light.h"
 #include "Camera.h"
 #include "Ray.h"
+#include "HitRecord.h"
 #include <Windows.h>
 #include <gdiplus.h>
 
@@ -21,6 +22,7 @@ public:
 	void addElement(Camera*);
 	void addElement(Light*);
 	int width, height;
+	HitRecord getHitRecord(Ray r);
 private:
 	std::vector<Geometry*> geom;
 	std::vector<Light*> lights;

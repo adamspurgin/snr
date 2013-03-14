@@ -13,6 +13,16 @@
 
 using namespace std;
 
+void renderTest(){
+	CoInitialize(NULL);
+	stringstream ss2;
+	ss2 << "{type:SCN,width:2048,height:1536,cameras:[{type:camera,loc:[0,0,0],orientation:[-1.5708,-2.35278e-009,0],width:36,length:36}],lights:[],geometry:[{type:sphere,loc:[1005.2,208.607,-364.686],radius:100,material:[0,0,0]},{type:sphere,loc:[868.415,-121.391,-316.64],radius:100,material:[0,0,0]},{type:sphere,loc:[423.263,16.3085,83.4392],radius:100,material:[0,0,0]}]}";
+	Scene scene = Scene(ss2);
+	Bitmap* b = scene.trace(0);
+	util::saveBitmap(L"testBitmap.bmp", b);
+	CoUninitialize();
+}
+
 void geomTest(){
 	stringstream ss;
 	ss << "{type:sphere,loc:[1,2,3],radius:1337,material:[6,7,8]}";
@@ -69,6 +79,8 @@ void matchTest(){
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	renderTest();
+	return 0;
 /*	CoInitialize(NULL);
 	//printf("start using msxml6\n");
 
@@ -88,7 +100,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	CoUninitialize();
 	return 0;*/
 
-	streamTests();
-	geomTest();
+//	streamTests();
+//	geomTest();
 }
 

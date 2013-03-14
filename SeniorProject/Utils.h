@@ -10,6 +10,8 @@ public:
 };
 
 namespace util{
+	void saveBitmap(BSTR, Bitmap*);
+	int GetEncoderClsid(const WCHAR*, CLSID*);
 	void match(std::istream&, const char*);
 	void eat(std::istream&);
 	void debug(char*);
