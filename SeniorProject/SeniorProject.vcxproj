@@ -79,9 +79,11 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="HitRecord.h" />
+    <ClInclude Include="KeyFrame.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Motion.h" />
     <ClInclude Include="Photon.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="resource.h" />
@@ -96,9 +98,11 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="HitRecord.cpp" />
+    <ClCompile Include="KeyFrame.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Motion.cpp" />
     <ClCompile Include="Photon.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -114,6 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SeniorProject.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="XMLSchema1.xsd">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Xsd>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

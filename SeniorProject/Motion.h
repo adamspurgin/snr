@@ -14,6 +14,6 @@ public:
 	~Motion(void);
 	std::vector<KeyFrame> keyframes;
 	void toStream(std::ostream&);
-	KeyFrame atTick(long);
+	KeyFrame atTick(double);
 };
 

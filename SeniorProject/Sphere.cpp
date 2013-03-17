@@ -27,6 +27,8 @@ void Sphere::toStream(std::ostream& str){
 	center.toStream(str);
 	str << ",radius:" << radius << ",material:";
 	material.toStream(str);
+	str << ",motion:";
+	path.toStream(str);
 	str << "}";
 }
 

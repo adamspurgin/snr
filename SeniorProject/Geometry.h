@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "KeyFrame.h"
+#include "Motion.h"
 
 
 
@@ -13,7 +14,7 @@ class Geometry :
 	public SceneElement
 {
 public:
-	std::vector<KeyFrame> path;
+	Motion path;
 	enum geomTypes {SPHERE, OTHER};
 	static geomTypes getNextType(std::istream&);
 	Geometry(void);

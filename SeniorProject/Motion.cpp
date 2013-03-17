@@ -4,6 +4,7 @@
 #include <algorithm>
 
 
+
 #define doSort() if(!isSorted) {sort(); isSorted=true;}
 #define interp(a, b, c)  (( (b) * (c) + (a) * ( 1 - (c))))
 
@@ -21,9 +22,15 @@ Motion::~Motion(void)
 {
 }
 
-void Motion::sort(){
-	std::sort(keyframes.begin, keyframes.end, KeyFrame::compare);
+bool compare(KeyFrame a, KeyFrame b){
+	return a.tick < b.tick;
 }
+
+void Motion::sort(){
+	std::sort(keyframes.begin(), keyframes.end(), compare);
+}
+
+
 
 void Motion::toStream(std::ostream& str){
 	str << "[";
@@ -36,7 +43,7 @@ void Motion::toStream(std::ostream& str){
 	str << "]";
 }
 
-KeyFrame Motion::atTick(long tick){
+KeyFrame Motion::atTick(double tick){
 	doSort();
 	for(int i=0; i<keyframes.size(); i++){
 		if(i == 0 && keyframes[i].tick >= tick){
@@ -48,12 +55,15 @@ KeyFrame Motion::atTick(long tick){
 			if(range == 0){
 				return keyframes[i];
 			}
-			long progress = tick - keyframes[i].tick;
+			double progress = tick - keyframes[i].tick;
 			double frac = progress/range;
 
 			double x = interp(keyframes[i].position.x, keyframes[i+1].position.x, frac);
+			std::cout << x << "\n";
 			double y = interp(keyframes[i].position.y, keyframes[i+1].position.y, frac);
+			std::cout << y << "\n";
 			double z = interp(keyframes[i].position.z, keyframes[i+1].position.z, frac);
+			std::cout << z << "\n";
 			Vec3d location(x, y, z);
 			KeyFrame ret;
 			ret.position = location;

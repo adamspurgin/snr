@@ -17,5 +17,6 @@ namespace util{
 	void debug(char*);
 	Scene* getFromXml(const char*);
 	bool quadRoots(double, double, double, double*, double*);
+	std::istream* stripSpaces(std::istream&);
 }
 

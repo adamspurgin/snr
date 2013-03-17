@@ -11,6 +11,11 @@ KeyFrame::KeyFrame(KeyFrame f, long tick) {
 	position = f.position;
 }
 
+KeyFrame::KeyFrame(Vec3d p, long t) {
+	tick = t;
+	position = p;
+}
+
 
 KeyFrame::~KeyFrame(void)
 {

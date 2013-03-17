@@ -9,9 +9,31 @@
 #include "Sphere.h"
 #include "Utils.h"
 #include "Material.h"
+#include "Motion.h"
+#define interp(a, b, c)  (( (b) * (c) + (a) * ( 1 - (c))))
 
 
 using namespace std;
+
+void stripTest(){
+	stringstream ss;
+	ss << "{    type: SCN,    width: 2048,    height: 1536,    cameras: [{        type: camera,        loc: [0, 0, 0],        orientation: [-1.5708, -2.35278e-009, 0],        width: 36,        length: 36    }],    lights: [],    geometry: [{        type: sphere,        loc: [1005.2, 208.607, -364.686],        radius: 100,        material: [0, 0, 0],        motion: []    }, {        type: sphere,        loc: [868.415, -121.391, -316.64],        radius: 100,        material: [0, 0, 0],        motion: []    }, {        type: sphere,        loc: [423.263, 16.3085, 83.4392],        radius: 100,        material: [0, 0, 0],        motion: []    }]}";
+	istream *ss2;
+	ss2 = util::stripSpaces(ss);
+
+	char test[1000];
+	ss2->getline(test, 1000);
+	printf("%s\n", test);
+}
+
+void motionTest(){
+	cout << interp(10.0, 15.0, 0.5);
+	Motion m;
+	m.keyframes.push_back(KeyFrame(Vec3d(5,0,0), 0));
+	m.keyframes.push_back(KeyFrame(Vec3d(10,20,15), 10));
+	m.atTick(5).toStream(std::cout);
+}
+
 
 void renderTest(){
 	CoInitialize(NULL);
@@ -63,7 +85,7 @@ void readTest(){
 	cout << "starting read test\n";
 	Scene *s = util::getFromXml("spheres.xml");
 	s->toStream(std::cout);
-	Bitmap* b = s->trace(0);
+	//Bitmap* b = s->trace(0);
 	cout << "ending read test\n";
 }
 
@@ -79,12 +101,15 @@ void matchTest(){
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	renderTest();
-	return 0;
-/*	CoInitialize(NULL);
+	//renderTest();
+	//motionTest();
+	
+	CoInitialize(NULL);
+	stripTest();
+//readTest();
 	//printf("start using msxml6\n");
 
-
+/*
 	std::cout << "test\n";
 	Scene s;
 //	s.trace(0);
@@ -96,9 +121,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	s.toStream(std::cout);
 	matchTest();
 	readTest();
-
+	*/
 	CoUninitialize();
-	return 0;*/
+	return 0;
 
 //	streamTests();
 //	geomTest();

@@ -120,6 +120,21 @@ void util::eat(std::istream& str){
 	}
 }
 
+std::istream* util::stripSpaces(std::istream& str){
+	stringstream *ss = new stringstream;
+	char c;
+	while(str.get(c)){
+		if(c == EOF){
+			break;
+		} else if(isspace(c)) {
+			continue;
+		} else {
+			ss->write(&c, 1);
+		}
+	}
+	return ss;
+}
+
 enum objType{SPHERE, CAMERA, LIGHT, ERR};
 
 objType getType(IXMLDOMNode* node){
@@ -321,6 +336,7 @@ CleanUp:
 
 
 Scene* util::getFromXml(const char* path){
+	line= __LINE__;
 	HRESULT hr = S_OK;
     IXMLDOMDocument *pXMLDom=NULL;
     IXMLDOMParseError *pXMLErr = NULL;
@@ -357,7 +373,7 @@ Scene* util::getFromXml(const char* path){
         // Failed to load xml, get last parsing error
         CHK_HR(pXMLDom->get_parseError(&pXMLErr));
         CHK_HR(pXMLErr->get_reason(&bstrErr));
-        printf("Failed to load DOM from stocks.xml. %S\n", bstrErr);
+        printf("Failed to load DOM from XML file. %S\n", bstrErr);
     }
 	BSTR bstrQuery1 = SysAllocString(L"c4d_file/v6_basedocument/v6_root_object/v6_rootlist2d/obj_pluginobject");
     CHK_ALLOC(bstrQuery1);
@@ -408,6 +424,14 @@ Scene* util::getFromXml(const char* path){
 	IXMLDOMNamedNodeMap *vals;
     CHK_HR(pXMLDom->selectSingleNode(bstrQueryResX, &resx));
 	CHK_HR(pXMLDom->selectSingleNode(bstrQueryResY, &resy));
+
+	BSTR resxXml, resyXml;
+
+	resx->get_xml(&resxXml);
+	resy->get_xml(&resyXml);
+
+	cout<< resxXml << "\n";
+	cout<< resyXml << "\n";
 	
 	CHK_HR(resx->get_attributes(&vals));
 	vals->getNamedItem(L"v", &resx);
