@@ -18,5 +18,14 @@ Progress Photon::tick(double dist, Scene* scene){
 	Ray r(position, destination);
 	if((position-destination).mag() < dist) {
 		return HIT;
+	} else{
+		HitRecord hr = scene->getHitRecord(r);
+		if(hr.hit && hr.distance < dist){
+			return DESTROY;
+		} else {
+			position = r.pointAt(dist);
+			return CONTINUE;
+		}
+		
 	}
 }

@@ -20,6 +20,8 @@
 
 using namespace std;
 
+#define interp(a, b, c)  (( (b) * (c) + (a) * ( 1 - (c)))
+
 int line = 0;
 
 // Macro that calls a COM method returning HRESULT value.
@@ -481,3 +483,4 @@ void util::saveBitmap(BSTR path, Bitmap* image){
 	GetEncoderClsid(L"image/bmp", &encoderClsid);
 	image->Save(path, &encoderClsid, NULL);
 }
+
