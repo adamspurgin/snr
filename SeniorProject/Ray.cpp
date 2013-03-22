@@ -21,3 +21,7 @@ Vec3d Ray::pointAt(double d){
 	point = point + (direction * d);
 	return point;
 }
+
+double Ray::dot(Ray other){
+	return direction.x * other.direction.x + direction.y * other.direction.y + direction.z * other.direction.z;
+}

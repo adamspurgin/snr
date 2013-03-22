@@ -10,5 +10,7 @@ public:
 	Vec3d location;
 	double distance;
 	bool hit;
+	Vec3d color;
+	Vec3d hitNormal;
 };
 

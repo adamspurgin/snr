@@ -29,6 +29,10 @@ Vec3d::~Vec3d(void)
 {
 }
 
+double Vec3d::distanceTo(Vec3d other){
+	return sqrt(pow(other.x - x, 2) + pow(other.y - y, 2) + pow(other.z - z, 2));
+}
+
 Vec3d Vec3d::operator +(const Vec3d& rhs){
 	Vec3d result;
 	result.x = this->x + rhs.x;

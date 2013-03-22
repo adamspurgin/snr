@@ -2,6 +2,12 @@
 #include <iostream>
 #include "Scene.h"
 
+#ifndef DEBUGMODE
+#define DEBUGMODE 0
+#endif
+
+#define DEBUG() if(DEBUGMODE) printf("%s: %d\n", __FILE__, __LINE__);
+
 class Utils
 {
 public:

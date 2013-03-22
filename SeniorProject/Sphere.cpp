@@ -15,6 +15,8 @@ Sphere::Sphere(std::istream& in){
 	in >> radius;
 	util::match(in, ",material:");
 	material = Material(in);
+	util::match(in, ",motion:");
+	path = Motion(in);
 	util::match(in, "}");
 }
 
@@ -46,4 +48,25 @@ double Sphere::intersect(Ray r){
 	} else {
 		return -1;
 	}
+}
+
+void Sphere::setTick(double tick){
+	if(!path.isEmpty()){
+		KeyFrame kf = path.atTick(tick);
+		std::cout << "setting position to: ";
+		kf.position.toStream(std::cout);
+		std::cout << "\n";
+		this->center = kf.position;
+	}
+}
+
+Vec3d Sphere::normalAt2(Vec3d point){
+	DEBUG();	
+	Vec3d direction;
+	//point.toStream(std::cout);
+	//center.toStream(std::cout);
+	direction.x = center.x - point.x;
+	direction.y = center.y - point.y;
+	direction.z = center.z - point.z;
+	return direction.normal() * -1;
 }

@@ -17,16 +17,18 @@ public:
 	Scene(std::istream&);
 	~Scene(void);
 	void toStream(std::ostream&);
-	Bitmap* trace(int);
+	Bitmap* trace(int, double);
 	void addElement(Geometry*);
 	void addElement(Camera*);
 	void addElement(Light*);
 	int width, height;
-	HitRecord getHitRecord(Ray r);
+	HitRecord getHitRecord(Ray, bool);
 private:
 	std::vector<Geometry*> geom;
 	std::vector<Light*> lights;
 	std::vector<Camera*> cameras;
 	Ray getRay(int, int, int);
+	Vec3d getLightAt(Vec3d, Geometry*, Ray, Vec3d);
+	void setTick(double);
 };
 

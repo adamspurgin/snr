@@ -15,5 +15,6 @@ public:
 	std::vector<KeyFrame> keyframes;
 	void toStream(std::ostream&);
 	KeyFrame atTick(double);
+	bool isEmpty();
 };
 

@@ -15,7 +15,7 @@
 #include <comutil.h>
 
 #ifndef DEBUG_ON
-#define DEBUG_ON 0
+#define DEBUG_ON 1
 #endif
 
 using namespace std;
@@ -126,7 +126,7 @@ std::istream* util::stripSpaces(std::istream& str){
 	while(str.get(c)){
 		if(c == EOF){
 			break;
-		} else if(isspace(c)) {
+		} else if(isspace(c) || c == '\n') {
 			continue;
 		} else {
 			ss->write(&c, 1);
@@ -374,6 +374,7 @@ Scene* util::getFromXml(const char* path){
         CHK_HR(pXMLDom->get_parseError(&pXMLErr));
         CHK_HR(pXMLErr->get_reason(&bstrErr));
         printf("Failed to load DOM from XML file. %S\n", bstrErr);
+		exit(1);
     }
 	BSTR bstrQuery1 = SysAllocString(L"c4d_file/v6_basedocument/v6_root_object/v6_rootlist2d/obj_pluginobject");
     CHK_ALLOC(bstrQuery1);

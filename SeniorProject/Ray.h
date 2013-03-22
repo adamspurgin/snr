@@ -10,5 +10,6 @@ public:
 	Vec3d pointAt(double);
 	Vec3d origin;
 	Vec3d direction;
+	double dot(Ray);
 };
 

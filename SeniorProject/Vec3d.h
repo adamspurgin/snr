@@ -12,6 +12,7 @@ public:
 	void normalize();
 	Vec3d normal();
 	double mag();
+	double distanceTo(Vec3d);
 	Vec3d operator +(const Vec3d&);
 	Vec3d operator -(const Vec3d&);
 	Vec3d operator *(const double&);

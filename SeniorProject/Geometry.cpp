@@ -51,3 +51,11 @@ void Geometry::toStream(std::ostream& str){
 double Geometry::intersect(Ray r){
 	return -1;
 }
+
+void Geometry::setTick(double tick){
+	std::cout << "this isn't supposed to happen\n";
+}
+
+Vec3d Geometry::normalAt2(Vec3d point){
+	return Vec3d(1,2,3);
+}

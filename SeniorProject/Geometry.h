@@ -21,7 +21,9 @@ public:
 	static Geometry* fromStream(std::istream&);
 	~Geometry(void);
 	Material material;
+	virtual void setTick(double);
 	virtual double intersect(Ray);
 	virtual void toStream(std::ostream&);
+	virtual Vec3d normalAt2(Vec3d);
 };
 
